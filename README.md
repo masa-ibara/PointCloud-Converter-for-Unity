@@ -1,2 +1,2 @@
-# PTS/PTX Converter
+# PTS/PTX Converter for Unity
 ptsファイルやptxファイルをインポート＆表示するためのあれやこれやです
