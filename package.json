@@ -1,0 +1,10 @@
+{
+  "author": "MSA_i",
+  "name": "com.msa-i.pointcloud-converter",
+  "version": "0.1.0",
+  "displayName": "PointCloud Converter",
+  "unity": "2021.3",
+  "type": "tool",
+  "dependencies": {
+  }
+}
