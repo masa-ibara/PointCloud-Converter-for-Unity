@@ -8,8 +8,9 @@ namespace PtsImporter
 {
     public class Window : EditorWindow
     {
+        int _maxPointsCount = 100000;
         MeshShape _meshShape = MeshShape.Tetrahedron;
-        int _maxPointsCount = 0;
+        float _pointSize = 0.01f;
         
         [MenuItem("Assets/PTS PTX Importer")]
         public static void ShowWindow()
@@ -24,6 +25,7 @@ namespace PtsImporter
             var maxPointCountField = new IntegerField();
             maxPointCountField.label = "Max Point Count";
             maxPointCountField.tooltip = "0 means no limit";
+            maxPointCountField.value = _maxPointsCount;
             maxPointCountField.RegisterValueChangedCallback(evt =>
             {
                 _maxPointsCount = evt.newValue;
@@ -37,6 +39,15 @@ namespace PtsImporter
                 _meshShape = (MeshShape)evt.newValue;
             });
             root.Add(meshShapeField);
+            
+            var pointSizeField = new FloatField();
+            pointSizeField.label = "Point Size";
+            pointSizeField.value = _pointSize;
+            pointSizeField.RegisterValueChangedCallback(evt =>
+            {
+                _pointSize = evt.newValue;
+            });
+            root.Add(pointSizeField);
 
             var readButton = new Button();
             readButton.text = "Read PTS/PTX File";
@@ -50,11 +61,13 @@ namespace PtsImporter
                 });
                 if (path.EndsWith("pts"))
                 {
-                    Generator.CreateGameObject(Importer.ReadPtsFile(path).points, _meshShape, 0.01f, _maxPointsCount);
+                    var pts = Importer.ReadPtsFile(path);
+                    Generator.CreateGameObject(pts.points, pts.pointCount, _meshShape, _pointSize, _maxPointsCount);
                 }
                 else if (path.EndsWith("ptx"))
                 {
-                    Generator.CreateGameObject(Importer.ReadPtxFile(path).points, _meshShape, 0.01f, _maxPointsCount);
+                    var ptx = Importer.ReadPtxFile(path);
+                    Generator.CreateGameObject(ptx.points, ptx.rows * ptx.columns, _meshShape, _pointSize, _maxPointsCount);//This number of points is skeptical
                 }
                 else
                 {

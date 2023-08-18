@@ -32,13 +32,23 @@ namespace PtsImporter
     {
         public int rows;
         public int columns;
+        public Vector3 scannerRegisteredPosition;
+        public Vector3 scannerRegisteredAxisX;
+        public Vector3 scannerRegisteredAxisY;
+        public Vector3 scannerRegisteredAxisZ;
+        public Matrix4x4 scannerTransform;
         public Point[] points;
         
-        public Ptx(int rows, int columns, Point[] points)
+        public Ptx(int rows, int columns, Vector3 scannerRegisteredPosition, Vector3 scannerRegisteredAxisX, Vector3 scannerRegisteredAxisY, Vector3 scannerRegisteredAxisZ, Matrix4x4 scannerTransform, Point[] points)
         {
             this.rows = rows;
             this.columns = columns;
             this.points = points;
+            this.scannerRegisteredPosition = scannerRegisteredPosition;
+            this.scannerRegisteredAxisX = scannerRegisteredAxisX;
+            this.scannerRegisteredAxisY = scannerRegisteredAxisY;
+            this.scannerRegisteredAxisZ = scannerRegisteredAxisZ;
+            this.scannerTransform = scannerTransform;
         }
     }
 }

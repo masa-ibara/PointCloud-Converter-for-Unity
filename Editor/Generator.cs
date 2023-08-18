@@ -11,34 +11,49 @@ namespace PtsImporter
     }
     public class Generator
     {
-        public static void CreateGameObject(Point[] points, MeshShape meshShape, float pointSize, int maxPointCount)
+        public static void CreateGameObject(Point[] points, int pointCount, MeshShape meshShape, float pointSize, int maxPointCount)
         {
             var meshes = new List<Mesh>();
+            int targetCount;
+            var count = 0;
+            
+            if (maxPointCount <= 0 || pointCount / maxPointCount < 1)
+            {
+                targetCount = 1;
+            }
+            else
+            {
+                targetCount = pointCount / maxPointCount;
+            }
             foreach (var point in points)
             {
-                switch (meshShape)
+                if (count % targetCount == 0)
                 {
-                    case MeshShape.Quad:
-                        meshes.Add(CreateQuad(point.potition, point.color, pointSize));
-                        break;
-                    case MeshShape.Tetrahedron:
-                        meshes.Add(CreateTetrahedron(point.potition, point.color, pointSize));
-                        break;
+                    switch (meshShape)
+                    {
+                        case MeshShape.Quad:
+                            meshes.Add(CreateQuad(point.potition, point.color, pointSize));
+                            break;
+                        case MeshShape.Tetrahedron:
+                            meshes.Add(CreateTetrahedron(point.potition, point.color, pointSize));
+                            break;
+                    }
                 }
+                count++;
             }
             var reducedMeshes = CombineMeshes(meshes.ToArray());
             var rootGameObject = new GameObject("Cloud Points");
-            var count = 0;
+            var meshCount = 0;
             var material = new Material(Shader.Find("Unlit/VertexColor"));
             foreach (var mesh in reducedMeshes)
             {
-                var gameObject = new GameObject($"Mesh {count}");
+                var gameObject = new GameObject($"Mesh {meshCount}");
                 var meshFilter = gameObject.AddComponent<MeshFilter>();
                 meshFilter.mesh = mesh;
                 var meshRenderer = gameObject.AddComponent<MeshRenderer>();
                 meshRenderer.material = material;
                 gameObject.transform.parent = rootGameObject.transform;
-                count++;
+                meshCount++;
             }
         }
 
@@ -60,8 +75,6 @@ namespace PtsImporter
             return reducedMeshes.ToArray();
         }
 
-        //点を間引く機能もいる
-        
         static Mesh CreateQuad( Vector3 position, Color vertexColor, float size )
         {
             var halfSize  = size / 2;
