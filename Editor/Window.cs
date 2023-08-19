@@ -4,7 +4,7 @@ using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace PtsImporter
+namespace PointCloudConverter
 {
     public class Window : EditorWindow
     {
@@ -12,10 +12,10 @@ namespace PtsImporter
         MeshShape _meshShape = MeshShape.Tetrahedron;
         float _pointSize = 0.01f;
         
-        [MenuItem("Assets/PTS PTX Importer")]
+        [MenuItem("Assets/PTS PTX Converter")]
         public static void ShowWindow()
         {
-            GetWindow<Window>("PTS/PTX Importer");
+            GetWindow<Window>("PTS/PTX Converter");
         }
         
         void OnEnable()

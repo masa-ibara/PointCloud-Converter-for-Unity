@@ -3,7 +3,7 @@ using System.Globalization;
 using System.IO;
 using UnityEngine;
 
-namespace PtsImporter
+namespace PointCloudConverter
 {
     public class Importer
     {

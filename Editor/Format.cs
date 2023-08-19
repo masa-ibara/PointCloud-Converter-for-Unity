@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace PtsImporter
+namespace PointCloudConverter
 {
     public class Point
     {
